@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
   <style>
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
       background-color: #0e0e0e;
       color: #33ff33;
-      font-family: "Courier New", monospace;
+      font-family: 'VT323', monospace;
+      font-size: 20px;
+      line-height: 1.4;
+      height: 100%;
+      overflow: hidden;
+    }
+    #terminal-output {
+      margin: 0;
       padding: 1em;
-      font-size: 16px;
+      white-space: pre-wrap;
+      min-height: 100vh;
     }
     .cursor {
       display: inline-block;
-      width: 8px;
+      width: 10px;
+      height: 1em;
       background-color: #33ff33;
       animation: blink 1s infinite;
+      vertical-align: bottom;
     }
     @keyframes blink {
-      0% { opacity: 1; }
+      0%, 100% { opacity: 1; }
       50% { opacity: 0; }
-      100% { opacity: 1; }
     }
   </style>
 </head>
 <body>
-  <pre id="terminal-output">[ MAIN FRAME INITIALIZING ]</pre><span class="cursor"></span>
+  <pre id="terminal-output"></pre><span class="cursor"></span>
 
   <script>
     const messages = [
@@ -34,16 +46,25 @@
       `[ DATA FLOW STATUS ]\n> 🧠: Active\n> 🎵: Inspired\n> 🍜: Craving Ramen Again`
     ];
 
-    let current = 0;
     const terminal = document.getElementById("terminal-output");
+    const cursor = document.querySelector(".cursor");
+    let msgIndex = 0;
 
-    function rotateMessage() {
-      terminal.textContent = messages[current];
-      current = (current + 1) % messages.length;
+    function typeMessage(message, index = 0) {
+      if (index <= message.length) {
+        terminal.textContent = message.slice(0, index);
+        setTimeout(() => typeMessage(message, index + 1), 25);
+      } else {
+        // Pause before typing the next message
+        setTimeout(() => {
+          msgIndex = (msgIndex + 1) % messages.length;
+          typeMessage(messages[msgIndex]);
+        }, 6000);
+      }
     }
 
-    setInterval(rotateMessage, 8000);
-    rotateMessage();
+    // Start typing the first message
+    typeMessage(messages[msgIndex]);
   </script>
 </body>
 </html>
