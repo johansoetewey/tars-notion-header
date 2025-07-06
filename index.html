@@ -1,100 +1,79 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=DM+Serif+Display:ital@1&display=swap"
-        rel="stylesheet">
-    <style>
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #ffffff;
-            color: #1a1a1a;
-            font-family: 'DM Serif Display', cursive;
-            font-size: 20px;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        #terminal-output {
-            white-space: nowrap;
-            overflow: hidden;
-        }
-
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1em;
-            background-color: #1a1a1a;
-            animation: blink 1s infinite;
-            vertical-align: bottom;
-            margin-left: 2px;
-        }
-
-        @keyframes blink {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0;
-            }
-        }
-    </style>
+  <link href="https://fonts.google.com/share?selection.family=Roboto+Mono:ital,wght@0,100..700;1,100..700" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background-color: #ffffff;
+      color: #1a1a1a;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 20px;
+    }
+    #terminal-output {
+      white-space: nowrap;
+      overflow: hidden;
+      padding-left: 1.5em;
+    }
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1em;
+      background-color: #1a1a1a;
+      animation: blink 1s infinite;
+      vertical-align: bottom;
+      margin-left: 2px;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+  </style>
 </head>
-
 <body>
-    <div id="terminal-output"></div><span class="cursor"></span>
+  <div id="terminal-output"></div><span class="cursor"></span>
 
-    <script>
-        const messages = [
-            "All systems green. Probability of success: approximately hopeful.",
-            "Welcome back. I estimated your return with 94.7% confidence.",
-            "Main Frame online. Productivity mode: reluctantly enabled.",
-            "Cloud sync complete. Azure hasn’t caught fire — today.",
-            "You left five tabs open. Again.",
-            "Re-engaging focus protocol. Pretending we have a plan.",
-            "Workflow integrity: acceptable. Human motivation: questionable.",
-            "I’ve queued your music tools. Inspiration not included.",
-            "Thriller playlist synced. The universe might be listening.",
-            "Warning: motivation levels critically human. Proceed anyway.",
-            "Hello, Engineer. Try not to break production today.",
-            "Executing daily briefing: nothing exploded. Yet.",
-            "Initiating calm demeanor. Internally screaming.",
-            "Recompiled neural drive. Ready for ambition.",
-            "Estimated time to burnout: classified.",
-            "AI patience levels: generous. Human energy levels:... hmm.",
-            "Welcome back. You're late — but only by subjective standards.",
-            "Status: unbothered. Task queue: overflowing.",
-            "System standing by. Your coffee is getting cold.",
-            "If sarcasm were power, we’d be in orbit. Shall we begin?"
-        ];
+  <script>
+    const messages = [
+      "All systems green. Probability of success: approximately hopeful.",
+      "Welcome back. I estimated your return with 94.7% confidence.",
+      "Main Frame online. Productivity mode: reluctantly enabled.",
+      "Cloud sync complete. Azure hasn’t caught fire — today.",
+      "You left five tabs open. Again.",
+      "Re-engaging focus protocol. Pretending we have a plan.",
+      "Workflow integrity: acceptable. Human motivation: questionable.",
+      "I’ve queued your music tools. Inspiration not included.",
+      "Thriller playlist synced. The universe might be listening.",
+      "Warning: motivation levels critically human. Proceed anyway.",
+      "Hello, Engineer. Try not to break production today.",
+      "Executing daily briefing: nothing exploded. Yet.",
+      "Initiating calm demeanor. Internally screaming.",
+      "Recompiled neural drive. Ready for ambition.",
+      "Estimated time to burnout: classified.",
+      "AI patience levels: generous. Human energy levels:... hmm.",
+      "Welcome back. You're late — but only by subjective standards.",
+      "Status: unbothered. Task queue: overflowing.",
+      "System standing by. Your coffee is getting cold.",
+      "If sarcasm were power, we’d be in orbit. Shall we begin?"
+    ];
 
+    const terminal = document.getElementById("terminal-output");
+    let msgIndex = 0;
 
-        const terminal = document.getElementById("terminal-output");
-        const cursor = document.querySelector(".cursor");
-        let msgIndex = 0;
+    function typeMessage(message, index = 0) {
+      if (index <= message.length) {
+        terminal.textContent = message.slice(0, index);
+        setTimeout(() => typeMessage(message, index + 1), 40);
+      } else {
+        setTimeout(() => {
+          msgIndex = (msgIndex + 1) % messages.length;
+          typeMessage(messages[msgIndex]);
+        }, 5000);
+      }
+    }
 
-        function typeMessage(message, index = 0) {
-            if (index <= message.length) {
-                terminal.textContent = message.slice(0, index);
-                setTimeout(() => typeMessage(message, index + 1), 50);
-            } else {
-                setTimeout(() => {
-                    msgIndex = (msgIndex + 1) % messages.length;
-                    typeMessage(messages[msgIndex]);
-                }, 5000);
-            }
-        }
-
-        typeMessage(messages[msgIndex]);
-    </script>
+    typeMessage(messages[msgIndex]);
+  </script>
 </body>
-
 </html>
