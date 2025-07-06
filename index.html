@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #33ff33;
+      font-family: "Courier New", monospace;
+      padding: 1em;
+      font-size: 16px;
+    }
+    .cursor {
+      display: inline-block;
+      width: 8px;
+      background-color: #33ff33;
+      animation: blink 1s infinite;
+    }
+    @keyframes blink {
+      0% { opacity: 1; }
+      50% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <pre id="terminal-output">[ MAIN FRAME INITIALIZING ]</pre><span class="cursor"></span>
+
+  <script>
+    const messages = [
+      `[ MAIN FRAME v1.42 ]\n> Boot complete. ☁ Azure clouds at 98.3% stability.\n> Local systems: synced.\n> Alert: Productivity protocols nominal.`,
+      `[ ENGINEER LOGON DETECTED ]\n> Welcome back, Commander.\n> Threat assessment: Meetings: High | Deadlines: Critical\n> Suggestion: Initiate caffeine subroutine.`,
+      `[ SYSTEM STATUS ]\n> Neural latency: Minimal\n> Notes unsorted: 91\n> ☁ Status: Azure skies clear`,
+      `[ INITIATING SESSION ]\n> Synced with 🎛️: Music Suite\n> Synced with ☁️: Azure\n> Mood Analysis: 63% Sci-Fi. 37% Lo-fi.`,
+      `[ DATA FLOW STATUS ]\n> 🧠: Active\n> 🎵: Inspired\n> 🍜: Craving Ramen Again`
+    ];
+
+    let current = 0;
+    const terminal = document.getElementById("terminal-output");
+
+    function rotateMessage() {
+      terminal.textContent = messages[current];
+      current = (current + 1) % messages.length;
+    }
+
+    setInterval(rotateMessage, 8000);
+    rotateMessage();
+  </script>
+</body>
+</html>
